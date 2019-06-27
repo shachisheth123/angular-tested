@@ -1,0 +1,62 @@
+<div *ngIf="course" class="mainbox">
+    <div class="row sideb" >
+        <div class="col-sm-2  left-sidebar">
+            <div class="sidebar-box">
+                <div class="space-box">
+                   <figure class="course-img">
+                    <img src="{{course.courseImage}}" alt="">
+                   </figure>
+                </div>
+                <nav class="sidebar" >
+                    <div class="list-group" >    
+                        <div id="accordion">
+                            <div  *ngFor="let chapter of course.courseChapter; let i=index">
+                                <div  id="heading{{i}}">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link btn-chap" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+                                            {{chapter.chapterName}}
+                                        </button>
+                                    </h5>
+                                </div>
+                                
+                                <div id="collapse{{i}}" class="collapse show" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
+                                    <div >
+                                        <ul *ngFor="let module of course.courseChapter[i].chapterModule; let j=index">
+                                            <li class="modulelist">
+                                                <a routerLink="modules/{{courseId}}/{{i}}/{{j}}" class="btn-module" id="tick" >
+                                                    {{module.moduleName}}
+                                                </a>
+                                                <div *ngIf="module.complete" class="fa fa-check tick"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div id="collapse{{i}}" class="collapse show" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
+                                    <div >
+                                        <ul *ngFor="let quiz of course.courseChapter[i].chapterQuiz; let j=index">
+                                            <li class="modulelist">
+                                                <a routerLink="quiz/{{courseId}}/{{i}}/{{j}}" class="btn-module" >
+                                                    Quiz&nbsp;{{quiz.quizId}}
+                                                </a>
+                                                <div *ngIf="quiz.complete" class="fa fa-check tick" ></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="col-sm-10 main-box">
+                <h2 class="course-head">{{course.courseName}}</h2>
+            <!-- <h2 style="margin-left: 22%;">{{course.courseName}}</h2> -->
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
